@@ -1,0 +1,42 @@
+<div class="container">
+  <h1 mat-dialog-title>Add new book</h1>
+  <form autocomplete="off" [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
+
+    <mat-form-field>
+      <mat-label>Select Book</mat-label>
+      <mat-select formControlName="bookId">
+        <mat-option *ngFor="let book of listOfBooks" [value]="book._id">
+          {{book.title}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="!formGroup.controls['bookId'].valid && formGroup.controls['bookId'].touched">
+        {{requiredError}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>User Name</mat-label>
+      <input matInput placeholder="User Name" formControlName="userName">
+      <mat-error *ngIf="!formGroup.controls['userName'].valid && formGroup.controls['userName'].touched">
+        {{requiredError}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="datetime-local" formControlName="startDate" (focus)="removeError()"
+        placeholder="Start Date" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="datetime-local" formControlName="endDate" (focus)="removeError()" placeholder="End Date" />
+      <span style="color: red" *ngIf="dateError.length">
+        {{dateError}}
+      </span>
+    </mat-form-field>
+
+    <div mat-dialog-actions>
+      <button mat-button mat-dialog-close>Close</button>
+      <button mat-button>Submit</button>
+    </div>
+  </form>
+</div>
